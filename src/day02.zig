@@ -137,8 +137,8 @@ pub fn main() !void {
         const game = try GameStat.initFomLine(line);
         game.describe();
 
-        var is_possible = !game.isNotPossible(total_red, total_green, total_blue);
-        var power_of_min_set = game.powerOfMinSet(total_red, total_green, total_blue);
+        const is_possible = !game.isNotPossible(total_red, total_green, total_blue);
+        const power_of_min_set = game.powerOfMinSet(total_red, total_green, total_blue);
 
         print("  > possible={}\t> power_of_min_set={}\n", .{ is_possible, power_of_min_set });
         print("\n", .{});
