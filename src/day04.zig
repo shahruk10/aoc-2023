@@ -78,7 +78,7 @@ const PointsCounter = struct {
     }
 
     pub fn update(self: *PointsCounter, card_number: u16, want_numbers_str: []const u8, got_numbers_str: []const u8) !void {
-        self.addCopyOfCard(card_number);
+        self.addCopyOfCard(card_number, 1);
 
         var want_numbers = tokenizeSeq(u8, want_numbers_str, " ");
         var got_numbers = tokenizeSeq(u8, got_numbers_str, " ");
@@ -105,13 +105,11 @@ const PointsCounter = struct {
         // For each copy of card # i, we add a copy of the card we won off of card # i.
         const num_copies = self.card_num_copies[card_number];
 
-        for (0..num_copies) |_| {
-            var j = card_number + 1;
-            const b = j + num_matches;
+        var j = card_number + 1;
+        const b = j + num_matches;
 
-            while (j < b) : (j += 1) {
-                self.addCopyOfCard(j);
-            }
+        while (j < b) : (j += 1) {
+            self.addCopyOfCard(j, num_copies);
         }
     }
 
@@ -121,8 +119,8 @@ const PointsCounter = struct {
         }
     }
 
-    pub fn addCopyOfCard(self: *PointsCounter, card_num: u16) void {
-        self.card_num_copies[card_num] += 1;
+    pub fn addCopyOfCard(self: *PointsCounter, card_num: u16, num_copies: u32) void {
+        self.card_num_copies[card_num] += num_copies;
     }
 };
 
